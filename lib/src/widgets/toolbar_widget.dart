@@ -454,9 +454,11 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                           ),
                           SliverFillRemaining(
                             hasScrollBody: false,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: _buildChildren(),
+                            child: PointerInterceptor(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: _buildChildren(),
+                              ),
                             ),
                           ),
                         ],
@@ -507,7 +509,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
               items: [
                 CustomDropdownMenuItem(
                     value: 'p',
-                    child: PointerInterceptor(child: Text('Normal'))),
+                    child: PointerInterceptor(child: Text('普通'))),
                 CustomDropdownMenuItem(
                     value: 'blockquote',
                     child: PointerInterceptor(
@@ -517,7 +519,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                   left: BorderSide(
                                       color: Colors.grey, width: 3.0))),
                           padding: EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text('Quote',
+                          child: Text('引文',
                               style: TextStyle(
                                   fontFamily: 'times', color: Colors.grey))),
                     )),
@@ -529,49 +531,49 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                               borderRadius: BorderRadius.circular(5),
                               color: Colors.grey),
                           padding: EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text('Code',
+                          child: Text('代码',
                               style: TextStyle(
                                   fontFamily: 'courier', color: Colors.white))),
                     )),
                 CustomDropdownMenuItem(
                   value: 'h1',
                   child: PointerInterceptor(
-                      child: Text('Header 1',
+                      child: Text('一级标题',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 32))),
                 ),
                 CustomDropdownMenuItem(
                   value: 'h2',
                   child: PointerInterceptor(
-                      child: Text('Header 2',
+                      child: Text('二级标题',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 24))),
                 ),
                 CustomDropdownMenuItem(
                   value: 'h3',
                   child: PointerInterceptor(
-                      child: Text('Header 3',
+                      child: Text('三级标题',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18))),
                 ),
                 CustomDropdownMenuItem(
                   value: 'h4',
                   child: PointerInterceptor(
-                      child: Text('Header 4',
+                      child: Text('四级标题',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16))),
                 ),
                 CustomDropdownMenuItem(
                   value: 'h5',
                   child: PointerInterceptor(
-                      child: Text('Header 5',
+                      child: Text('五级标题',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13))),
                 ),
                 CustomDropdownMenuItem(
                   value: 'h6',
                   child: PointerInterceptor(
-                      child: Text('Header 6',
+                      child: Text('六级标题',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 11))),
                 ),
@@ -1120,7 +1122,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                               newColor = color;
                             },
                             title: Text('Choose a Color',
-                                style: Theme.of(context).textTheme.headline6),
+                                style: Theme.of(context).textTheme.titleLarge),
                             width: 40,
                             height: 40,
                             spacing: 0,
@@ -1797,7 +1799,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                         child: StatefulBuilder(builder:
                             (BuildContext context, StateSetter setState) {
                           return AlertDialog(
-                            title: Text('Insert Link'),
+                            title: Text('插入链接'),
                             scrollable: true,
                             content: Form(
                               key: formKey,
@@ -1805,7 +1807,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Text to display',
+                                    Text('显示文字',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                     SizedBox(height: 10),
@@ -1815,14 +1817,14 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
-                                        hintText: 'Text',
+                                        hintText: '文字',
                                       ),
                                       onSubmitted: (_) {
                                         urlFocus.requestFocus();
                                       },
                                     ),
                                     SizedBox(height: 20),
-                                    Text('URL',
+                                    Text('链接',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                     SizedBox(height: 10),
@@ -1832,11 +1834,11 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                       textInputAction: TextInputAction.done,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
-                                        hintText: 'URL',
+                                        hintText: '链接',
                                       ),
                                       validator: (String? value) {
                                         if (value == null || value.isEmpty) {
-                                          return 'Please enter a URL!';
+                                          return '请输入链接!';
                                         }
                                         return null;
                                       },
@@ -1868,11 +1870,11 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                               openNewTab = !openNewTab;
                                             });
                                           },
-                                          child: Text('Open in new window',
+                                          child: Text('新窗口中打开',
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .textTheme
-                                                      .bodyText1
+                                                      .bodyLarge
                                                       ?.color)),
                                         ),
                                       ],
@@ -1937,7 +1939,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                         child: StatefulBuilder(builder:
                             (BuildContext context, StateSetter setState) {
                           return AlertDialog(
-                            title: Text('Insert Image'),
+                            title: Text('插入图片'),
                             scrollable: true,
                             content: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -1945,7 +1947,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                 children: [
                                   if (widget
                                       .htmlToolbarOptions.allowImagePicking)
-                                    Text('Select from files',
+                                    Text('从文件中选取',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                   if (widget
@@ -1982,11 +1984,11 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                                 });
                                               }
                                             },
-                                            child: Text('Choose image',
+                                            child: Text('选择图片',
                                                 style: TextStyle(
                                                     color: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1
+                                                        .bodyLarge
                                                         ?.color)),
                                           ),
                                           suffixIcon: result != null
@@ -2008,7 +2010,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                     SizedBox(height: 20),
                                   if (widget
                                       .htmlToolbarOptions.allowImagePicking)
-                                    Text('URL',
+                                    Text('图片链接',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                   if (widget
@@ -2020,7 +2022,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                     textInputAction: TextInputAction.done,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
-                                      hintText: 'URL',
+                                      hintText: '链接',
                                       errorText: validateFailed,
                                       errorMaxLines: 2,
                                     ),
@@ -2031,7 +2033,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text('Cancel'),
+                                child: Text('取消'),
                               ),
                               TextButton(
                                 onPressed: () async {
@@ -2040,14 +2042,14 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                     setState(() {
                                       validateFailed = widget.htmlToolbarOptions
                                               .allowImagePicking
-                                          ? 'Please either choose an image or enter an image URL!'
-                                          : 'Please enter an image URL!';
+                                          ? '请选择一个本地图片，或者输入图片链接!'
+                                          : '请输入图片链接!';
                                     });
                                   } else if (filename.text.isNotEmpty &&
                                       url.text.isNotEmpty) {
                                     setState(() {
                                       validateFailed =
-                                          'Please input either an image or an image URL, not both!';
+                                          '请要么选择一个本地图片，要么输入图片链接! 而不要同时输入两者。';
                                     });
                                   } else if (filename.text.isNotEmpty &&
                                       result?.files.single.bytes != null) {
@@ -2146,7 +2148,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .textTheme
-                                                      .bodyText1
+                                                      .bodyLarge
                                                       ?.color)),
                                         ),
                                         suffixIcon: result != null
@@ -2298,7 +2300,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .textTheme
-                                                      .bodyText1
+                                                      .bodyLarge
                                                       ?.color)),
                                         ),
                                         suffixIcon: result != null
@@ -2450,7 +2452,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .textTheme
-                                                      .bodyText1
+                                                      .bodyLarge
                                                       ?.color)),
                                         ),
                                         suffixIcon: result != null
@@ -2688,7 +2690,8 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                 child: SingleChildScrollView(
                                   child: DataTable(
                                     columnSpacing: 5,
-                                    dataRowHeight: 75,
+                                    dataRowMinHeight: 75,
+                                    dataRowMaxHeight: 75,
                                     columns: const <DataColumn>[
                                       DataColumn(
                                         label: Text(
