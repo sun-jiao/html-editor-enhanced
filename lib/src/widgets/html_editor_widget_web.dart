@@ -44,9 +44,6 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
   /// The view ID for the IFrameElement. Must be unique.
   late String createdViewId;
 
-  /// The actual height of the editor, used to automatically set the height
-  late double actualHeight;
-
   /// A Future that is observed by the [FutureBuilder]. We don't use a function
   /// as the Future on the [FutureBuilder] because when the widget is rebuilt,
   /// the function may be excessively called, hurting performance.
@@ -61,7 +58,6 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
 
   @override
   void initState() {
-    actualHeight = widget.otherOptions.height;
     createdViewId = getRandString(10);
     widget.controller.viewId = createdViewId;
     initSummernote();
@@ -211,7 +207,6 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
           \$('#summernote-2').summernote({
             placeholder: "${widget.htmlEditorOptions.hint}",
             tabsize: 2,
-            height: ${widget.otherOptions.height},
             disableGrammar: false,
             spellCheck: ${widget.htmlEditorOptions.spellCheck},
             maximumFileSize: $maximumFileSize,
@@ -465,9 +460,6 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
     if (widget.callbacks != null) addJSListener(widget.callbacks!);
     final iframe = html.IFrameElement()
       ..width = MediaQuery.of(widget.initBC).size.width.toString() //'800'
-      ..height = widget.htmlEditorOptions.autoAdjustHeight
-          ? actualHeight.toString()
-          : widget.otherOptions.height.toString()
       // ignore: unsafe_html, necessary to load HTML string
       ..srcdoc = htmlString
       ..style.border = 'none'
@@ -492,20 +484,6 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
         var jsonStr2 = jsonEncoder.convert(data2);
         html.window.onMessage.listen((event) {
           var data = json.decode(event.data);
-          if (data['type'] != null &&
-              data['type'].contains('toDart: htmlHeight') &&
-              data['view'] == createdViewId &&
-              widget.htmlEditorOptions.autoAdjustHeight) {
-            final docHeight = data['height'] ?? actualHeight;
-            if ((docHeight != null && docHeight != actualHeight) &&
-                mounted &&
-                docHeight > 0) {
-              setState(mounted, this.setState, () {
-                actualHeight =
-                    docHeight + (toolbarKey.currentContext?.size?.height ?? 0);
-              });
-            }
-          }
           if (data['type'] != null &&
               data['type'].contains('toDart: onChangeContent') &&
               data['view'] == createdViewId) {
@@ -561,10 +539,7 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                             viewType: createdViewId,
                           );
                         } else {
-                          return Container(
-                              height: widget.htmlEditorOptions.autoAdjustHeight
-                                  ? actualHeight
-                                  : widget.otherOptions.height);
+                          return Container();
                         }
                       }))),
           widget.htmlToolbarOptions.toolbarPosition ==
