@@ -513,9 +513,8 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                 widget.callbacks!.onChangeContent != null) {
               widget.callbacks!.onChangeContent!.call(data['contents']);
             }
-            if (widget.htmlEditorOptions.shouldEnsureVisible &&
-                Scrollable.of(context) != null) {
-              Scrollable.of(context)!.position.ensureVisible(
+            if (widget.htmlEditorOptions.shouldEnsureVisible) {
+              Scrollable.of(context).position.ensureVisible(
                   context.findRenderObject()!,
                   duration: const Duration(milliseconds: 100),
                   curve: Curves.easeIn);
@@ -541,11 +540,7 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: widget.htmlEditorOptions.autoAdjustHeight
-          ? actualHeight
-          : widget.otherOptions.height,
-      child: Column(
+    return Column(
         children: <Widget>[
           widget.htmlToolbarOptions.toolbarPosition ==
                   ToolbarPosition.aboveEditor
@@ -581,7 +576,6 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                   callbacks: widget.callbacks)
               : Container(height: 0, width: 0),
         ],
-      ),
     );
   }
 
