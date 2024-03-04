@@ -229,7 +229,7 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                     }
                   },
                   onLoadStop:
-                      (InAppWebViewController controller, Uri? uri) async {
+                      (InAppWebViewController controller, WebUri? uri) async {
                     var url = uri.toString();
                     var maximumFileSize = 10485760;
                     if (url.contains(filePath)) {
